@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    dockerImage = docker.build("lucasjotap/your-app:${env.BUILD_NUMBER}")
+                    def dockerImage = docker.build("lucasjotap/your-app:${env.BUILD_NUMBER}")
                 }
             }
         }
