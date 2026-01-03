@@ -1,5 +1,8 @@
 # CI/CD Journey: Setting up a Jenkins Pipeline for a Flask Application
 
+<img width="398" height="128" alt="image" src="https://github.com/user-attachments/assets/e2858177-6415-4d68-8d92-105fdc02bdf8" />
+
+
 This document chronicles the process of setting up a Continuous Integration and Continuous Delivery (CI/CD) pipeline for a simple Flask application using Jenkins and Docker.
 
 ## 1. Initial Setup
