@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker run --rm your-org/your-app:${env.BUILD_NUMBER} ./run-tests.sh'
+                sh 'docker run --rm your-org/your-app:$BUILD_NUMBER ./run-tests.sh'
             }
         }
         stage('Push') {
