@@ -19,13 +19,18 @@ pipeline {
             }
         }
         stage('Push') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                        dockerImage.push()
+          steps {
+            script {
+              def dockerImage = docker.image("lucasjotap/your-app:${env.BUILD_NUMBER}")
+              withDockerRegistry(
+                credentialsId: 'dockerhub-credentials',
+                url: 'https://index.docker.io/v1/'
+              ) {
+                dockerImage.push()
                     }
                 }
             }
         }
     }
 }
+
