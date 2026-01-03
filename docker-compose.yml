@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins  # Use a separate file for Jenkins infra
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      # Connects Jenkins to the Docker engine on your host
+      - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  jenkins_data:

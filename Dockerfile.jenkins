@@ -1,0 +1,21 @@
+FROM jenkins/jenkins:lts-jdk17
+USER root
+
+# 1. Install Docker CLI
+RUN apt-get update && apt-get install -y ca-certificates curl && \
+    install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc && \
+    # Single-line echo to avoid malformed entry errors
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian bookworm stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update && apt-get install -y docker-ce-cli && \
+    rm -rf /var/lib/apt/lists/*
+
+# 2. Fix GID Conflict and add Jenkins to Docker group
+# We use GID 999 as it's the standard for Docker on most hosts
+RUN EXISTING_GROUP=$(getent group 999 | cut -d: -f1) && \
+    if [ -n "$EXISTING_GROUP" ]; then groupmod -n old-$EXISTING_GROUP $EXISTING_GROUP; fi && \
+    groupadd -g 999 docker_host && \
+    usermod -aG docker_host jenkins
+
+USER jenkins
