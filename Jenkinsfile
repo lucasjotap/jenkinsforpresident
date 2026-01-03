@@ -9,13 +9,13 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    dockerImage = docker.build("your-org/your-app:${env.BUILD_NUMBER}")
+                    dockerImage = docker.build("lucasjotap/your-app:${env.BUILD_NUMBER}")
                 }
             }
         }
         stage('Test') {
             steps {
-                sh 'docker run --rm your-org/your-app:$BUILD_NUMBER ./run-tests.sh'
+                sh 'docker run --rm lucasjotap/your-app:$BUILD_NUMBER ./run-tests.sh'
             }
         }
         stage('Push') {
